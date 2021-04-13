@@ -39,14 +39,19 @@ def pig_latin(string):
         i = 0  # In case anything goes wrong in the for loop
         # Go through each word
         for i in range(0, len(word)):
+            print(ending)
             # Add to ending if its a consonant
             if word[i] not in VOWELS:
                 ending.append(word[i])
 
             # When the first vowel appears add whats left
             else:
+                leftover = word[i:]
                 break
-        leftover = word[i:]
+        else:
+            # This is for when the word does not have any vowels
+            # e.g. Nymph -> Nymphay
+            leftover = []
 
     # Put all together
     new_word = leftover + ending + FINAL
