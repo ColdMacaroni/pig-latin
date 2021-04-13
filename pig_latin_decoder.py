@@ -4,7 +4,7 @@
 # Dago
 # 2021-04-13
 
-from pig-latin.py import *
+from pig_latin import *
 
 def decoder(string):
     """
