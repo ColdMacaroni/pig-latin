@@ -7,7 +7,7 @@
 from pig_latin import *
 
 
-def decoder(string):
+def decode(string):
     """
     Decodes a string of piglatin and returns all possible translations.
     """
@@ -64,6 +64,26 @@ def decoder(string):
         return possible_words
 
 
+def decode_pretty(string):
+    """
+    Decodes a string of pig-latin and returns in a pretty way
+    """
+    sentence = separate_nonalpha(string)
+    new_sentence = []
+    for word in sentence:
+        decoded_word = decode(word)
+
+        if len(decoded_word) == 1:
+            new_sentence.append(''.join(decoded_word))
+
+        else:
+            pretty_word = "( " + ' | '.join(decoded_word) + " )"
+            new_sentence.append(pretty_word)
+
+    return ''.join(new_sentence)
+
+
 if __name__ == "__main__":
     # Code
-    pass
+    while True:
+        print(decode_pretty(input()))
