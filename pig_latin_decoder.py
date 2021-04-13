@@ -4,7 +4,7 @@
 # Dago
 # 2021-04-13
 from separate_nonalpha import *
-
+from read_english_dictionary import *
 
 def decode(string):
     """
@@ -19,7 +19,7 @@ def decode(string):
     # This one-liner returns false if any character is not alpha
     # all() applies the and operator to the whole map
     if not all(map(lambda char: char.isalpha(), word)):
-        return string
+        return [string]
 
     # To avoid index out of range errors in non pig latin inputs
     if len(word) > 2:
@@ -66,15 +66,57 @@ def decode(string):
         return possible_words
 
 
-def run_against_dict(word_list):
+def run_against_dict(word):
     """
-    Runs each word against a dictionary.
+    Runs word against a dictionary.
     """
-    #for word in
-    pass
+    english_dict = load_words()
+    return word.lower() in english_dict
 
 
-def decode_list(string):
+def check_words(ls):
+    """
+    Returns a list of valid words per run_against_dict()
+    Returns as is if not valid
+    """
+    new_list = []
+    valid = False
+    for word in ls:   
+        if run_against_dict(word):
+            valid = True
+            new_list.append(word)
+
+    # Return as is if no words are valid
+    if not valid:
+        new_list = ls
+
+    return new_list
+
+
+def validated_decode(string):
+    """
+    Decodes a sentence in pig latin and returns only the valid words.
+    """
+    sentence = decode_sentence(string)
+    valid_sentence = []
+
+    # Validate each word
+    for word in sentence:
+        valid_sentence.append(check_words(word))
+
+    # Return nicely
+    new_sentence = []
+    for word in valid_sentence:
+        if len(word) == 1:
+            new_sentence.append(''.join(word))
+
+        else:
+            pretty_word = "( " + ' | '.join(word) + " )"
+            new_sentence.append(pretty_word)
+            
+    return ''.join(new_sentence)
+    
+def decode_sentence(string):
     """
     Runs a list against the decode function
     """
@@ -83,11 +125,12 @@ def decode_list(string):
 
     return decoded_sentence
 
+
 def decode_pretty(string):
     """
     Decodes a string of pig-latin and returns in a pretty way
     """
-    sentence = decode_list(string)
+    sentence = decode_sentence(string)
     new_sentence = []
     for decoded_word in sentence:
         if len(decoded_word) == 1:
