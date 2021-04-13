@@ -1,5 +1,5 @@
 ##
-# pig-latin-decoder.py.py
+# pig-latin-decoder.py
 # Description ------------
 # Dago
 # 2021-04-13
