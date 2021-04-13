@@ -3,8 +3,7 @@
 # Description ------------
 # Dago
 # 2021-04-13
-
-from pig_latin import *
+from separate_nonalpha import *
 
 
 def decode(string):
@@ -86,4 +85,4 @@ def decode_pretty(string):
 if __name__ == "__main__":
     # Code
     while True:
-        print(decode_pretty(input()))
+        print(decode_pretty(input("From pig latin: ")))

@@ -3,6 +3,7 @@
 # Converts input to pig latin!
 # Dago
 # 2021-04-09
+from separate_nonalpha import *
 
 
 def pig_latin(string):
@@ -35,6 +36,7 @@ def pig_latin(string):
         leftover = word.copy()
 
     else:
+        i = 0  # In case anything goes wrong in the for loop
         # Go through each word
         for i in range(0, len(word)):
             # Add to ending if its a consonant
@@ -59,35 +61,6 @@ def pig_latin(string):
         return final_word.lower()
 
 
-def separate_nonalpha(string):
-    """
-    Splits a sentence by words and nonalpha characters.
-    Spaces included
-    """
-    temp = ''
-    # This way instead of split so that spaces are conserved
-    # To avoid ["hi", ",", "you"] -> " ".join() -> "hi , you"
-    # Users can ["hi", ",", " ", "you"] -> ''.join() -> "hi, you"
-    sentence = list(string)
-    processed_sentence = []
-
-    for char in sentence:
-        if char.isalpha():
-            # Store up
-            temp += char
-        else:
-            processed_sentence.append(temp)
-            processed_sentence.append(char)
-            temp = ''  # Reset
-    else:
-        # Just in case the last word doesnt get added by the previous
-        # else
-        processed_sentence.append(temp)
-
-    # Filter will clear out any empty strings
-    return list(filter(None, processed_sentence))
-
-
 def translate_sentence(string):
     """
     Runs the pig_latin function for each word of a sentence
@@ -104,6 +77,8 @@ def translate_sentence(string):
 
     return ''.join(new_sentence)
 
+
 if __name__ == "__main__":
     # Code
-    print(translate_sentence(input()))
+    while True:
+        print(translate_sentence(input("To pig latin: ")))
