@@ -17,6 +17,11 @@ def decoder(string):
 
     word = list(string.lower())
 
+    # This one-liner returns false if any character is not alpha
+    # all() applies the and operator to the whole map
+    if not all(map(lambda char: char.isalpha(), word)):
+        return string
+
     possible_words = []
 
     # Remove trailing "ay," it is useless
@@ -27,7 +32,7 @@ def decoder(string):
     last_chars = ''.join(word[-len(VOWEL_FALLBACK):])
     if word[0] in vowels and last_chars == VOWEL_FALLBACK:
         # Without the fallback
-        possible_words.append(word[:-len(VOWEL_FALLBACK)])
+        possible_words.append(''.join(word[:-len(VOWEL_FALLBACK)]))
 
     # - Get the characters after the last vowel
     # Find last vowel
@@ -40,12 +45,23 @@ def decoder(string):
     # the first vowel
     leftover = word[last_vowel+1:]
     base = word[:last_vowel+1]
-    print(base, leftover)
 
     # Cycle through left over by getting the last char and then the
     # penultimate to last, etc.
-    # for i in len(): [-i:]
-    return possible_words
+    # 1, +1 because negative indexes start at 1
+    for i in range(1, len(leftover)+1):
+        start = leftover[-i:]
+        end = leftover[:-i]
+
+        possibility = ''.join(start) + ''.join(base) + ''.join(end)
+        possible_words.append(possibility)
+
+    if string[0].isupper():
+        # Returns with an uppercase first char
+        return list(map(lambda word: word.capitalize(), possible_words))
+    else:
+        # Returns all lowercase
+        return possible_words
 
 
 if __name__ == "__main__":
