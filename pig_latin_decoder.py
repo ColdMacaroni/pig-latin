@@ -21,11 +21,14 @@ def decode(string):
     if not all(map(lambda char: char.isalpha(), word)):
         return string
 
+    # To avoid index out of range errors in non pig latin inputs
+    if len(word) > 2:
+        # Remove trailing "ay," it is useless
+        word = word[:-len("ay")]
+    else:
+        return string
+
     possible_words = []
-
-    # Remove trailing "ay," it is useless
-    word = word[:-len("ay")]
-
     # - Check for vowels
     # This would equal the vowel fallback if they are the same
     last_chars = ''.join(word[-len(VOWEL_FALLBACK):])
@@ -63,15 +66,30 @@ def decode(string):
         return possible_words
 
 
+def run_against_dict(word_list):
+    """
+    Runs each word against a dictionary.
+    """
+    #for word in
+    pass
+
+
+def decode_list(string):
+    """
+    Runs a list against the decode function
+    """
+    sentence = separate_nonalpha(string)
+    decoded_sentence = list(map(decode, sentence))
+
+    return decoded_sentence
+
 def decode_pretty(string):
     """
     Decodes a string of pig-latin and returns in a pretty way
     """
-    sentence = separate_nonalpha(string)
+    sentence = decode_list(string)
     new_sentence = []
-    for word in sentence:
-        decoded_word = decode(word)
-
+    for decoded_word in sentence:
         if len(decoded_word) == 1:
             new_sentence.append(''.join(decoded_word))
 
