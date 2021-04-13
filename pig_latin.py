@@ -39,7 +39,6 @@ def pig_latin(string):
         i = 0  # In case anything goes wrong in the for loop
         # Go through each word
         for i in range(0, len(word)):
-            print(ending)
             # Add to ending if its a consonant
             if word[i] not in VOWELS:
                 ending.append(word[i])
