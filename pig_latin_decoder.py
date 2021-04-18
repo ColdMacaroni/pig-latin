@@ -146,4 +146,5 @@ def decode_pretty(string):
 if __name__ == "__main__":
     # Code
     while True:
-        print(decode_pretty(input("From pig latin: ")))
+        print(decode_pretty(input("Normal Decode: ")))
+        print(validated_decode(input("Valid Decode: ")))
